@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.cbasample"
-        minSdkVersion 22
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -76,8 +76,6 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-extensions:$lifeCycleVersion"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifeCycleVersion"
-    implementation "androidx.room:room-runtime:$lifeCycleVersion"
-    kapt "androidx.room:room-compiler:$lifeCycleVersion"
 
 
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
