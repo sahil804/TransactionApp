@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/PaddedSectionLayout"
+    android:paddingBottom="@dimen/spacing1x"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorYellow">
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/HeadingD"
+        app:layout_constraintEnd_toStartOf="@+id/tvDateBefore"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="25 Oct 2020"/>
+
+    <TextView
+        android:id="@+id/tvDateBefore"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/HeadingD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="3 days ago"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

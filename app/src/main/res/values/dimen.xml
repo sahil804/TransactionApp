@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="matchContraint">0dp</dimen>
+    <dimen name="spacing0_5x">4dp</dimen>
+    <dimen name="spacing1x">8dp</dimen>
+    <dimen name="spacing1_5x">12dp</dimen>
+    <dimen name="spacing2x">16dp</dimen>
+    <dimen name="spacing5x">40dp</dimen>
+    <dimen name="spacing6x">48dp</dimen>
+</resources>

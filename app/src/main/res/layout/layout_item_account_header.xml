@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorLightGreen"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing1_5x">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="@dimen/spacing2x">
+
+        <ImageView
+            android:id="@+id/ivTransaction"
+            android:layout_width="@dimen/spacing6x"
+            android:layout_height="@dimen/spacing6x"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAccountNumber"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvAccountName"
+            app:srcCompat="@drawable/icon_transactional" />
+
+        <TextView
+            android:id="@+id/tvAccountName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing2x"
+            android:layout_marginLeft="@dimen/spacing2x"
+            style="@style/HeadingA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivTransaction"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text=" Account Name" />
+
+        <TextView
+            android:id="@+id/tvAccountNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing2x"
+            android:layout_marginLeft="@dimen/spacing2x"
+            android:layout_marginTop="@dimen/spacing1x"
+            style="@style/HeadingB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivTransaction"
+            app:layout_constraintTop_toBottomOf="@+id/tvAccountName"
+            tools:text=" Account Number" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/PaddedSectionLayout"
+        android:paddingBottom="@dimen/spacing1x"
+        android:background="@color/colorGrey">
+
+        <TextView
+            android:id="@+id/tvAvailableFunds"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginLeft="64dp"
+            style="@style/HeadingC"
+            android:text="@string/available_funds"
+            app:layout_constraintEnd_toStartOf="@+id/tvFunds"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvFunds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginLeft="64dp"
+            style="@style/HeadingD"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="$3000000000.76" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/fundsBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="tvAvailableFunds,tvFunds"/>
+
+        <TextView
+            android:id="@+id/tvAvailableBalance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/HeadingC"
+            android:text="@string/available_balance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvAvailableFunds"
+            app:layout_constraintTop_toBottomOf="@+id/fundsBarrier" />
+
+        <TextView
+            android:id="@+id/tvBalance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/HeadingB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fundsBarrier"
+            tools:text="$300.76" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

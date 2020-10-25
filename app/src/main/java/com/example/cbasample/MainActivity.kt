@@ -1,0 +1,39 @@
+package com.example.cbasample
+
+import android.os.Bundle
+import android.view.MenuItem
+import androidx.fragment.app.FragmentContainerView
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : DaggerAppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        val appBarConfiguration = AppBarConfiguration.Builder(
+            R.id.accountDetailsFragment
+        ).build()
+
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.navHostFragment) as NavHostFragment
+        toolbar
+            .setupWithNavController(navHostFragment.navController, appBarConfiguration)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setIcon(R.drawable.action_bar_image)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}

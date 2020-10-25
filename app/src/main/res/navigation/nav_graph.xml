@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/accountDetailsFragment">
+
+    <fragment
+        android:id="@+id/accountDetailsFragment"
+        android:name="com.example.cbasample.ui.TransactionListFragment"
+        android:label="Account Details"
+        tools:layout="@layout/account_details_fragment">
+        <action
+            android:id="@+id/action_accountDetailsFragment_to_findUsFragment"
+            app:destination="@id/findUsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/findUsFragment"
+        android:name="com.example.cbasample.ui.FindUsFragment"
+        android:label="Find us"
+        tools:layout="@layout/find_us_fragment">
+        <argument
+            android:name="atm"
+            app:argType="com.example.cbasample.data.model.Atm" />
+    </fragment>
+</navigation>
