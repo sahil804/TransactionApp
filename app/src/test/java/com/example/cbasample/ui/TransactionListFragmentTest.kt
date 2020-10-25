@@ -10,7 +10,7 @@ import com.example.cbasample.R
 import com.example.cbasample.data.network.Resource
 import com.nhaarman.mockitokotlin2.mock
 import junit.framework.TestCase.assertFalse
-import kotlinx.android.synthetic.main.account_details_fragment.*
+import kotlinx.android.synthetic.main.transaction_list_fragment.*
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -64,7 +64,6 @@ class TransactionListFragmentTest {
 
     private fun initMainActivity() {
         mainActivity = Robolectric.buildActivity(MainActivity::class.java).create().resume().get()
-        mainActivity.initNavigation()
     }
 
     private fun startFragmentInMainContentFrame(fragment: Fragment) {

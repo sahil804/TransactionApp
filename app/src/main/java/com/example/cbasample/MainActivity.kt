@@ -39,14 +39,4 @@ class MainActivity : DaggerAppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    fun initNavigation() : NavHostFragment {
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.navHostFragment) as NavHostFragment
-        val inflater = navHostFragment.navController.navInflater
-        graph = inflater.inflate(R.navigation.nav_graph)
-        graph.startDestination = R.id.transactionListFragment
-        navHostFragment.navController.graph = graph
-        return navHostFragment
-    }
 }

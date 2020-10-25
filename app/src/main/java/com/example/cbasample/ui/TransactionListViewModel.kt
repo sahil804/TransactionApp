@@ -1,6 +1,5 @@
 package com.example.cbasample.ui
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +23,7 @@ class TransactionListViewModel @Inject constructor(private var transactionReposi
 
     val transactions = transactionRepository.transactionsLiveData
 
-    val accountDetails = MutableLiveData<List<TransactionListItem>>()
+    val transactionList = MutableLiveData<List<TransactionListItem>>()
 
     companion object {
         const val TWO_WEEKS = 14
@@ -38,13 +37,11 @@ class TransactionListViewModel @Inject constructor(private var transactionReposi
 
     fun computeTransactionsDetails(transactionResponseData: TransactionResponseData) {
         viewModelScope.launch {
-            val accountDetail = mutableListOf<TransactionListItem>()
-            println("****")
-            Log.d("Sahil", "Thread before calling withcontext " + Thread.currentThread().name)
+            val transactionListItems = mutableListOf<TransactionListItem>()
             withContext(Dispatchers.IO) {
-                println("****")
                 val transactionList = mutableListOf<TransactionDetail>()
                 val atmMap = mutableMapOf<String, Atm>()
+                // created map for O(1) access of transaction ATM
                 transactionResponseData.atms.forEach {
                     atmMap[it.id] = it
                 }
@@ -68,39 +65,38 @@ class TransactionListViewModel @Inject constructor(private var transactionReposi
                         transactionList[0]
                             .transaction.effectiveDate.parseToDate()
                     )
-                Log.d("Sahil", "days bet $daysBetweenLowAndUp")
                 var totalExpenditure = 0.0
                 var lastDate: Date? = null
                 var currentDate: Date?
                 transactionList.forEach {
                     currentDate = it.transaction.effectiveDate.parseToDate()
+                    // for group of same date, adding a single header
                     if (lastDate != currentDate) {
-                        accountDetail.add(TransactionListItem(ItemType.DATE_HEADER, currentDate as Date))
-                        accountDetail.add(TransactionListItem(ItemType.TRANSACTION, it))
+                        transactionListItems.add(TransactionListItem(ItemType.DATE_HEADER, currentDate as Date))
+                        transactionListItems.add(TransactionListItem(ItemType.TRANSACTION, it))
                     } else {
-                        accountDetail.add(TransactionListItem(ItemType.TRANSACTION, it))
+                        transactionListItems.add(TransactionListItem(ItemType.TRANSACTION, it))
                     }
                     lastDate = currentDate
                     if (it.transaction.amount < 0.0) {
-                        Log.d("Sahil","---> "+totalExpenditure + "  "+abs(it.transaction.amount))
                         totalExpenditure += abs(it.transaction.amount)
                     }
                 }
-                accountDetail.add(0, TransactionListItem(ItemType.ACCOUNT_HEADER, transactionResponseData.account))
-                Log.d("Sahil", "totalExpenditure $totalExpenditure")
-                accountDetail.add(
+                transactionListItems.add(0, TransactionListItem(ItemType.ACCOUNT_HEADER, transactionResponseData.account))
+                transactionListItems.add(
                     TransactionListItem(
                         ItemType.PROJECTED_SPEND,
                         getProjectedSpending(daysBetweenLowAndUp, totalExpenditure)
                     )
                 )
-                println("^^^^")
             }
-            println("^^^^")
-            accountDetails.value = accountDetail
+            transactionList.value = transactionListItems
         }
     }
 
+    /*
+        This function takes the total expenditure over n days and calculate approx for 14 days
+     */
     private fun getProjectedSpending(daysBetweenLowAndUp: Long, expenditure: Double): Double {
         return (expenditure * TWO_WEEKS) / daysBetweenLowAndUp
     }

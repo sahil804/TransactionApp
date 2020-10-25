@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,7 +63,6 @@ class FindUsFragment : DaggerFragment(), OnMapReadyCallback,
     }
 
     private fun addMarker(googleMap: GoogleMap) {
-        Log.d("Sahil", "addMarker")
         with(googleMap) {
             if (isViewReady && isMapReady) {
                 clear()
@@ -102,7 +100,7 @@ class FindUsFragment : DaggerFragment(), OnMapReadyCallback,
             context?.hasPermission(Manifest.permission.ACCESS_FINE_LOCATION) ?: return
 
         if (permissionApproved) {
-            Log.d("Fragment", "location is there")
+            // not required anything to do
         } else {
             requestPermissionWithRationale(
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -124,7 +122,6 @@ class FindUsFragment : DaggerFragment(), OnMapReadyCallback,
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        Log.d("Sahil", "onMap Ready")
         map = googleMap ?: return
         isMapReady = true
         addMarker(googleMap)

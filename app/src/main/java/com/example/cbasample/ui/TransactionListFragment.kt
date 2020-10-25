@@ -1,7 +1,6 @@
 package com.example.cbasample.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import com.example.cbasample.data.network.Resource
 import com.example.cbasample.util.setVisibility
 import com.example.samplemapdemo.di.DaggerViewModelFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.account_details_fragment.*
+import kotlinx.android.synthetic.main.transaction_list_fragment.*
 import javax.inject.Inject
 
 class TransactionListFragment : DaggerFragment() {
@@ -28,7 +27,7 @@ class TransactionListFragment : DaggerFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.account_details_fragment, container, false)
+        return inflater.inflate(R.layout.transaction_list_fragment, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +35,7 @@ class TransactionListFragment : DaggerFragment() {
         transactionListViewModel = ViewModelProvider(this, viewModelFactory).get(TransactionListViewModel::class.java)
         transactionListViewModel.getTransactions()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
@@ -55,7 +55,11 @@ class TransactionListFragment : DaggerFragment() {
 
     private fun onLocationSelected(atm: Atm?) {
         atm?.let {
-            findNavController().navigate(TransactionListFragmentDirections.actionAccountDetailsFragmentToFindUsFragment(it))
+            findNavController().navigate(
+                TransactionListFragmentDirections.actionAccountDetailsFragmentToFindUsFragment(
+                    it
+                )
+            )
         }
     }
 
@@ -71,14 +75,12 @@ class TransactionListFragment : DaggerFragment() {
                 }
                 is Resource.Loaded -> {
                     setViewVisibility(contentVisibilty = true)
-                    Log.d("Sahil", "*** $resourceState ->." + resourceState.data)
                     transactionListViewModel.computeTransactionsDetails(resourceState.data)
                 }
             }
         })
 
-        transactionListViewModel.accountDetails.observe(viewLifecycleOwner, Observer {
-            Log.d("Sahil", "second observer $it")
+        transactionListViewModel.transactionList.observe(viewLifecycleOwner, Observer {
             transactionAdapter.notifyDataSetChanged(it)
         })
     }

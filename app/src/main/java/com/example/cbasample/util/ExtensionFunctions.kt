@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
-import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -26,16 +25,8 @@ fun View.hide() {
     this.visibility = View.GONE
 }
 
-fun View.invisible() {
-    this.visibility = View.INVISIBLE
-}
-
 fun View.show() {
     this.visibility = View.VISIBLE
-}
-
-fun View.isVisible(): Boolean {
-    return this.visibility == View.VISIBLE
 }
 
 fun View.setVisibility(isVisible: Boolean) {
@@ -62,7 +53,6 @@ fun Date.displayDate(format: String = "dd MMM yyyy"): String =
     SimpleDateFormat(format, Locale.ENGLISH).format(this)
 
 fun Date.differenceDays(nextDate: Date): Long {
-    Log.d("Sahil", "Date diff between " + nextDate + " old date " + this)
     val diffDays = nextDate.time - time
     return TimeUnit.DAYS.convert(diffDays, TimeUnit.MILLISECONDS)
 }
