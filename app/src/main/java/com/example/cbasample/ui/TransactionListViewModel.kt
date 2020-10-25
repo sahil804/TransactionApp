@@ -39,8 +39,10 @@ class TransactionListViewModel @Inject constructor(private var transactionReposi
     fun computeTransactionsDetails(transactionResponseData: TransactionResponseData) {
         viewModelScope.launch {
             val accountDetail = mutableListOf<TransactionListItem>()
+            println("****")
             Log.d("Sahil", "Thread before calling withcontext " + Thread.currentThread().name)
             withContext(Dispatchers.IO) {
+                println("****")
                 val transactionList = mutableListOf<TransactionDetail>()
                 val atmMap = mutableMapOf<String, Atm>()
                 transactionResponseData.atms.forEach {
@@ -92,7 +94,9 @@ class TransactionListViewModel @Inject constructor(private var transactionReposi
                         getProjectedSpending(daysBetweenLowAndUp, totalExpenditure)
                     )
                 )
+                println("^^^^")
             }
+            println("^^^^")
             accountDetails.value = accountDetail
         }
     }

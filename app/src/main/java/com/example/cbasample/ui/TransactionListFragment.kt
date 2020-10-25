@@ -21,7 +21,7 @@ class TransactionListFragment : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: DaggerViewModelFactory
-    private lateinit var transactionListViewModel: TransactionListViewModel
+    lateinit var transactionListViewModel: TransactionListViewModel
     private lateinit var transactionAdapter: TransactionAdapter
 
     override fun onCreateView(

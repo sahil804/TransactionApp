@@ -5,7 +5,7 @@ import com.example.cbasample.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 
-class CbaSampleApp : DaggerApplication() {
+open class CbaSampleApp : DaggerApplication() {
     lateinit var component: AppComponent
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> {

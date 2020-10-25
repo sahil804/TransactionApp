@@ -1,15 +1,14 @@
-package com.example.cbasample
+package com.example.cbasample.data.network
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.samplemapdemo.data.network.ApiInterface
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okio.buffer
 import okio.source
 import org.junit.After
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

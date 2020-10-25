@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/accountDetailsFragment">
+    app:startDestination="@id/transactionListFragment">
 
     <fragment
-        android:id="@+id/accountDetailsFragment"
+        android:id="@+id/transactionListFragment"
         android:name="com.example.cbasample.ui.TransactionListFragment"
         android:label="Account Details"
         tools:layout="@layout/account_details_fragment">

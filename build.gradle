@@ -34,4 +34,7 @@ ext {
     gsonVersion = '2.8.5'
     httpInterceptor = '4.4.1'
     retrofitVersion ='2.8.1'
+    androidxTestVersion = '1.2.0'
+    mockitoKotlinVersion = '2.1.0'
+    mockkVersion = '1.10.0'
 }

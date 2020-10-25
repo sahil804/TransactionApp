@@ -4,7 +4,7 @@
     <string name="available_funds">Available Funds</string>
     <string name="available_balance">Available balance</string>
     <string name="withdrawal_transaction_amount">-$%.2f</string>
-    <string name="credit_transaction_amount">-$%.2f</string>
+    <string name="credit_transaction_amount">$%.2f</string>
     <string name="pending_transaction_text"><![CDATA[<b> Pending: </b>]]>%1$s</string>
     <string name="transaction_text">%1$s</string>
     <string name="just_now">Just Now</string>
