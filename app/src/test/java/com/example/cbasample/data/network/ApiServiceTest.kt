@@ -60,7 +60,7 @@ class ApiServiceTest {
 
     private fun enqueueResponse(fileName: String, headers: Map<String, String> = emptyMap()) {
         val inputStream = javaClass.classLoader
-            ?.getResourceAsStream("$fileName")
+            ?.getResourceAsStream(fileName)
         val source = inputStream!!.source().buffer()
         val mockResponse = MockResponse()
         for ((key, value) in headers) {

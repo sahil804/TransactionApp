@@ -24,9 +24,9 @@ class TransactionListFragmentTest {
     @Rule
     @JvmField
     val instantExecutorRule = InstantTaskExecutorRule()
-    lateinit var mainActivity: MainActivity
+    private lateinit var mainActivity: MainActivity
 
-    lateinit var transactionListFragment: TransactionListFragment
+    private lateinit var transactionListFragment: TransactionListFragment
 
     @Before
     fun setup() {

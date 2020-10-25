@@ -37,7 +37,7 @@ class TransactionAdapterTest {
     @Before
     fun setup() {
         context = ApplicationProvider.getApplicationContext()
-        transactionListAdapter = TransactionAdapter(getTransactionListItem(), { })
+        transactionListAdapter = TransactionAdapter(getTransactionListItem()) { }
     }
 
     @Test
@@ -54,7 +54,7 @@ class TransactionAdapterTest {
 
     @Test
     fun testclearTransaction() {
-        holder = TransactionViewHolder(getItemView(R.layout.layout_item_transaction), { })
+        holder = TransactionViewHolder(getItemView(R.layout.layout_item_transaction)) { }
         transactionListAdapter.onBindViewHolder(holder, 1)
         with(holder.itemView) {
             assertFalse(tvTransactionDescription.text.contains("Pending"))
@@ -65,7 +65,7 @@ class TransactionAdapterTest {
 
     @Test
     fun testPendingTransaction() {
-        holder = TransactionViewHolder(getItemView(R.layout.layout_item_transaction), { })
+        holder = TransactionViewHolder(getItemView(R.layout.layout_item_transaction)) { }
         transactionListAdapter.onBindViewHolder(holder, 2)
         with(holder.itemView) {
             assertTrue(tvTransactionDescription.text.contains("Pending"))

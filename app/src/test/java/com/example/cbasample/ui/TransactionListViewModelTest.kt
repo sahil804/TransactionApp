@@ -1,20 +1,19 @@
 package com.example.cbasample.ui
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
+import androidx.test.core.app.ApplicationProvider
 import com.example.cbasample.CoroutinesTestRule
 import com.example.cbasample.MySampleRunner
-import com.example.cbasample.data.model.TransactionListItem
+import com.example.cbasample.R
 import com.example.cbasample.data.model.TransactionResponseData
 import com.example.cbasample.data.repository.TransactionRepository
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.spy
+import com.example.cbasample.util.getRelativeDateFromToday
 import com.nhaarman.mockitokotlin2.verify
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +21,9 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import java.util.Observer
+import java.util.Calendar
+import java.util.Date
+import java.util.TimeZone
 
 @RunWith(MySampleRunner::class)
 class TransactionListViewModelTest {
@@ -30,25 +31,26 @@ class TransactionListViewModelTest {
     @get:Rule
     val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
 
+    @ExperimentalCoroutinesApi
     @get:Rule
     var coroutinesTestRule = CoroutinesTestRule()
 
     @Mock
     private lateinit var transactionRepository: TransactionRepository
 
-    lateinit var transactionResponseData: TransactionResponseData
+    private lateinit var transactionResponseData: TransactionResponseData
 
-    lateinit var viewModel: TransactionListViewModel
+    private lateinit var viewModel: TransactionListViewModel
 
     @Mock
-    lateinit var observer: androidx.lifecycle.Observer<List<TransactionListItem>>
-
+    private lateinit var context: Context
 
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
+        context = ApplicationProvider.getApplicationContext()
         viewModel = TransactionListViewModel(transactionRepository)
-        transactionResponseData = mockk<TransactionResponseData>(relaxed = true)
+        transactionResponseData = mockk(relaxed = true)
     }
 
     @Test
@@ -59,12 +61,68 @@ class TransactionListViewModelTest {
         }
     }
 
-//    @Test
-//    fun testComputeTransactionsDetails() {
-//        //runBlockingTest {
-//            viewModel.accountDetails.observeForever { observer }
-//            viewModel.computeTransactionsDetails(transactionResponseData)
-//            verify(observer).onChanged(any())
-//        //}
-//    }
+    @Test
+    fun checkDateTimeText() {
+        val calendar = Calendar.getInstance()
+
+        calendar.time = Date()
+        calendar.add(Calendar.MINUTE, 0)
+        var date = Date(calendar.timeInMillis)
+        assertEquals(
+            "Just Now",
+            date.getRelativeDateFromToday(context)
+        )
+
+        calendar.time = Date()
+        calendar.add(Calendar.MINUTE, -30)
+        date = Date(calendar.timeInMillis)
+        assertEquals(
+            context.resources.getQuantityString(R.plurals.minutes_text, 30, 30L),
+            date.getRelativeDateFromToday(context)
+        )
+
+        calendar.time = Date()
+        calendar.add(Calendar.HOUR, -11)
+        date = Date(calendar.timeInMillis)
+        assertEquals(
+            context.resources.getQuantityString(R.plurals.hours_text, 11, 11L),
+            date.getRelativeDateFromToday(context)
+        )
+
+        //  Need to check in app for this DST impact but for now taking DST calculation in here to fix UT
+        calendar.time = Date()
+        val z: TimeZone = calendar.timeZone
+        var offset = z.rawOffset
+        if (z.inDaylightTime(Date())) {
+            offset += z.dstSavings
+        }
+        val offsetHrs = offset / 1000 / 60 / 60
+        val offsetMins = offset / 1000 / 60 % 60
+
+        calendar.add(Calendar.HOUR_OF_DAY, -offsetHrs)
+        calendar.add(Calendar.MINUTE, -offsetMins)
+        calendar.add(Calendar.DAY_OF_YEAR, -15)
+        date = Date(calendar.timeInMillis)
+        assertEquals(
+            context.resources.getQuantityString(R.plurals.days_text, 15, 15L),
+            date.getRelativeDateFromToday(context)
+        )
+
+        calendar.time = Date()
+        calendar.add(Calendar.MONTH, -4)
+        date = Date(calendar.timeInMillis)
+        assertEquals(
+            context.resources.getQuantityString(R.plurals.months_text, 4, 4L),
+            date.getRelativeDateFromToday(context)
+        )
+
+        calendar.time = Date()
+        calendar.add(Calendar.YEAR, -9)
+        calendar.add(Calendar.MONTH, -9)
+        date = Date(calendar.timeInMillis)
+        assertEquals(
+            context.resources.getQuantityString(R.plurals.years_text, 9, 9L),
+            date.getRelativeDateFromToday(context)
+        )
+    }
 }
